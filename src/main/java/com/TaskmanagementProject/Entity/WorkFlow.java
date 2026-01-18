@@ -1,0 +1,82 @@
+package com.TaskmanagementProject.Entity;
+
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "work_flows")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class WorkFlow {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String workFlowName;
+
+    @Column(length = 5000)
+    private String workFlowDescription;
+
+    @Builder.Default
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(
+        mappedBy = "workflow",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @Builder.Default
+    private List<WorkFlowTransaction> transaction = new ArrayList<>();
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getWorkFlowName() {
+		return workFlowName;
+	}
+
+	public void setWorkFlowName(String workFlowName) {
+		this.workFlowName = workFlowName;
+	}
+
+	public String getWorkFlowDescription() {
+		return workFlowDescription;
+	}
+
+	public void setWorkFlowDescription(String workFlowDescription) {
+		this.workFlowDescription = workFlowDescription;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public List<WorkFlowTransaction> getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(List<WorkFlowTransaction> transaction) {
+		this.transaction = transaction;
+	}
+    
+    
+}
