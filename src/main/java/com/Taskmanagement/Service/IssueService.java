@@ -4,21 +4,25 @@ package com.Taskmanagement.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Taskmanagement.Client.UserClient;
 import com.Taskmanagement.DTO.IssueDTO;
 import com.Taskmanagement.Enum.IssuePriority;
 import com.Taskmanagement.Enum.IssueStatus;
+import com.Taskmanagement.Enum.Role;
 import com.TaskmanagementProject.Entity.Issue;
 import com.TaskmanagementProject.Entity.IssueComent;
 import com.TaskmanagementProject.Repository.EpicRepository;
 import com.TaskmanagementProject.Repository.IssueCommentRepository;
 import com.TaskmanagementProject.Repository.IssueRepository;
 import com.TaskmanagementProject.Repository.SprintRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,6 +42,11 @@ public class IssueService {
 	@Autowired
 	private EpicRepository epicRepo;
 	
+	@Autowired
+	private WorkFlowService workFlowService;
+	
+	@Autowired
+	private UserClient userClient;
 	
 	
 	
@@ -95,21 +104,38 @@ public class IssueService {
 		
 		Issue issue = issueRepo.findById(id).orElseThrow(()-> new RuntimeException("Issue not found"));
 		
-		IssueStatus newStatus;
+		//IssueStatus newStatus;
 		
-		try {
-			newStatus = IssueStatus.valueOf(String.valueOf(status).toUpperCase().trim());
-		} catch (Exception e) {
-			throw new RuntimeException("Invalid Status"+status);
+		//try {
+		//	newStatus = IssueStatus.valueOf(String.valueOf(status).toUpperCase().trim());
+		//} catch (Exception e) {
+			//throw new RuntimeException("Invalid Status"+status);
+		//}
+		
+		
+		String from = issue.getStatus().name();
+		String to = status.name();
+		
+		Long workFlowId= issue.getWorkFlowId();
+		if(workFlowId==null) {
+			throw new RuntimeException("WorkFlow not assigned to issue");
 		}
 		
-		issue.setStatus(newStatus);
+		Set<Role>userRole= userClient.getRole(performBy);
+		
+		boolean allowed = workFlowService.isTransactionAllowed(workFlowId, from, to, userRole);
+		if(!allowed) {
+			throw new RuntimeException("User"+performBy+"is not allowed to move issue from"+from+"->"+to);
+		}
+		issue.setStatus(status);
 		issueRepo.save(issue);
 		
 		IssueComent comment = new IssueComent();
 		comment.setIssueId(id);
 		comment.setAuthorEmail(performBy);
-		comment.setBody("Status changed to :"+status);
+		comment.setBody("Status changed from :"+from+"->"+to);
+		
+		issuecommentRepo.save(comment);
 		
 		return toDTO(issue);
 		
@@ -152,7 +178,7 @@ public class IssueService {
 				throw new RuntimeException("invalid Status:"+statusStr+"| Allowed"+Arrays.toString(IssueStatus.values()));
 			}
 		
-			return issueRepo.findByIssueStatus(status).stream().map(this::toDTO).collect(Collectors.toList());
+			return issueRepo.findByStatus(status).stream().map(this::toDTO).collect(Collectors.toList());
 		
 	 }
 		
@@ -181,7 +207,6 @@ public class IssueService {
 		dto.setUpdateAt(issue.getUpdateAt());
 		dto.setEpicId(issue.getEpicId());
 		dto.setSprintId(issue.getSprintId());
-		
 		
 		return dto;
 	}

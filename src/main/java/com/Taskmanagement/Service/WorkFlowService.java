@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.Taskmanagement.Enum.Role;
 import com.TaskmanagementProject.Entity.WorkFlow;
 import com.TaskmanagementProject.Entity.WorkFlowTransaction;
 import com.TaskmanagementProject.Repository.WorkFlowRepository;
@@ -79,7 +79,7 @@ public class WorkFlowService {
 		
 	}
 	
-	public boolean isTransactionAllowed(Long workFlowId, String fromStatus, String toStatus,Set<String>userRole) {
+	public boolean isTransactionAllowed(Long workFlowId, String fromStatus, String toStatus,Set<Role>userRole) {
 		List<WorkFlowTransaction>list=workflowTransRepo.findByWorkIdFromStatus(workFlowId, fromStatus);
 		for(WorkFlowTransaction trans:list) {
 			if(trans.getToStatus().equals(toStatus)) {
@@ -87,7 +87,7 @@ public class WorkFlowService {
 				if(allowed == null || allowed.isEmpty()) return true;
 				
 				Set<String> allowedSet = Arrays.stream(allowed.split(",")).map(String::trim).collect(Collectors.toSet());
-				for(String r: userRole) if( allowedSet.contains(r)) return true;
+				for(Role r: userRole) if( allowedSet.contains(r)) return true;
 				return false;
 			}
 		}

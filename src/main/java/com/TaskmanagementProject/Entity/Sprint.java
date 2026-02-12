@@ -28,7 +28,9 @@ public class Sprint {
 	@Enumerated(EnumType.STRING)
 	private SprintState state;
 	
-
+private Long projectId;
+private LocalDateTime createdAt =LocalDateTime.now();
+	
 	public Long getId() {
 		return id;
 	}
@@ -68,6 +70,23 @@ public class Sprint {
 	public void setState(SprintState state) {
 		this.state = state;
 	}
+
+	public Long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+	
 
 	
 	

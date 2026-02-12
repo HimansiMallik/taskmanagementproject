@@ -10,6 +10,7 @@ import com.Taskmanagement.Enum.IssueStatus;
 import com.TaskmanagementProject.Entity.Issue;
 
 
+
 @Repository
 public interface IssueRepository extends JpaRepository<Issue,Long>{
 	
@@ -17,6 +18,7 @@ public interface IssueRepository extends JpaRepository<Issue,Long>{
 	Optional<Issue>findById(Long id);
 	List<Issue>findByAssigneeEmail(String assigneeEmail);
 	List<Issue>findBySprintId(Long sprintId);
-	List<Issue>findByIssueStatus(IssueStatus issueStatus);
-    
+	List<Issue>findByStatus(IssueStatus Status);
+    List<Issue>findByProjectIdAndSprintIdIsNullOrderByBackLogPosition(Long projectId);
+	List<Issue> findByEpicId(Long epicId);
 }

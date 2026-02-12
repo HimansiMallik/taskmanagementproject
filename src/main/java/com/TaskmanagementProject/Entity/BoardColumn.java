@@ -13,7 +13,7 @@ public class BoardColumn {
 	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="board-id")
+	@JoinColumn(name="board_id")
 	private Board board;
 	
 	private String name;

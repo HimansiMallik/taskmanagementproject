@@ -23,8 +23,8 @@ public class WorkFlowTransaction {
 	private Long id;
 	
 	@ManyToOne(fetch =FetchType.LAZY)
-	@JoinColumn(name="workflow_id",nullable=false)
-	private WorkFlow Workflow;
+	@JoinColumn(name="Workflow_id",nullable=false)
+	private WorkFlow workflow;
 	
 	private String fromStatus;
 	private String toStatus;
@@ -34,14 +34,11 @@ public class WorkFlowTransaction {
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public WorkFlow getWorkflow() {
-		return Workflow;
+		return workflow;
 	}
-	public void setWorkflow(WorkFlow Workflow) {
-		this.Workflow = Workflow;
+	public void setWorkflow(WorkFlow workflow) {
+		this.workflow = workflow;
 	}
 	public String getFromStatus() {
 		return fromStatus;
@@ -66,6 +63,9 @@ public class WorkFlowTransaction {
 	}
 	public void setAllowedRole(String allowedRole) {
 		this.allowedRole = allowedRole;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

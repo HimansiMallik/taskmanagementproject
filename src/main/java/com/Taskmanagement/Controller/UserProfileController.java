@@ -25,28 +25,27 @@ public class UserProfileController {
 	@Autowired
 	private UserProfileService userProfileService;
 	
+	// URL: PUT http://localhost:8080/api/userProfile/test@gmail.com
 	@PutMapping("/{email}")
-	public ResponseEntity<UserProfileDTO>updateProfile(@RequestBody UserProfileDTO dto){
-		
+	public ResponseEntity<UserProfileDTO> updateProfile(@PathVariable String email, @RequestBody UserProfileDTO dto){
 		return ResponseEntity.ok(userProfileService.updateUserProfile(dto));
 	}
-	@GetMapping("/all")
-	public ResponseEntity<List<UserProfileDTO>>getAllUser(){
-		return ResponseEntity.ok(userProfileService.getAllUserProfile());
-	}
 	
-	@GetMapping("/{email}")
-	public ResponseEntity<UserProfileDTO>getUserByEmail(@PathVariable String userOfficialEmail){
+	// URL: GET http://localhost:8080/api/userProfile/email/test@gmail.com
+	@GetMapping("/email/{email:.+}")
+	public ResponseEntity<UserProfileDTO> getUserByEmail(@PathVariable("email") String userOfficialEmail){
 		return ResponseEntity.ok(userProfileService.getProfileByEmail(userOfficialEmail));
 	}
 	
-	@GetMapping("{designation}")
-	public ResponseEntity<List<UserProfileDTO>>getUserByDesignation(@PathVariable String designation){
+	// URL: GET http://localhost:8080/api/userProfile/designation/Manager
+	@GetMapping("/designation/{designation}")
+	public ResponseEntity<List<UserProfileDTO>> getUserByDesignation(@PathVariable String designation){
 		return ResponseEntity.ok(userProfileService.getUserByDesignation(designation));
 	}
-	@GetMapping("/{department}")
-	public ResponseEntity<List<UserProfileDTO>>getUserByDepartment(@PathVariable String department){
+	
+	// URL: GET http://localhost:8080/api/userProfile/department/IT
+	@GetMapping("/department/{department}")
+	public ResponseEntity<List<UserProfileDTO>> getUserByDepartment(@PathVariable String department){
 		return ResponseEntity.ok(userProfileService.getUserByDepartment(department));
 	}
-	 
 }

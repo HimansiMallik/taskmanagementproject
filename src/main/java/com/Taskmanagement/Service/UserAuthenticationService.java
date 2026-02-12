@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import com.Taskmanagement.DTO.AuthResponseDTO;
 import com.Taskmanagement.DTO.LoginRequestDTO;
 import com.Taskmanagement.DTO.RegisterRequestDTO;
-import com.Taskmanagement.Security.JWTTokenUtil;
 import com.TaskmanagementProject.Entity.UserAuthentication;
 import com.TaskmanagementProject.Repository.UserAuthenticationRepository;
+import com.TaskmanagementProject.Security.JWTTokenUtil;
 
 import lombok.RequiredArgsConstructor;
 

@@ -18,7 +18,7 @@ import lombok.*;
 @Getter 
 @Setter
 public class UserAuthentication {
-	
+	@Builder.Default
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;

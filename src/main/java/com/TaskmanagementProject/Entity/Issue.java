@@ -16,7 +16,7 @@ import lombok.*;
 @Builder
 
 public class Issue {
-	
+	@Builder.Default
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -40,7 +40,7 @@ public class Issue {
 	
 	private String assigneeEmail;
 	private String repoterEmail;
-	
+	private Long projectId;
 	private LocalDateTime createdAt=LocalDateTime.now();
 	private LocalDateTime  updateAt= LocalDateTime.now();
 	
@@ -49,8 +49,9 @@ public class Issue {
 	private Long sprintId;
 	private Long epicId;
 	
-	private Long sourceIssuedId;
+	private Long sourceIssueId;
 	private Integer backLogPosition;
+	private Long workFlowId;
 	
 	
 	
@@ -138,17 +139,29 @@ public class Issue {
 	public void setEpicId(Long epicId) {
 		this.epicId = epicId;
 	}
-	public Long getSourceIssuedId() {
-		return sourceIssuedId;
+	public Long getSourceIssueId() {
+		return sourceIssueId;
 	}
-	public void setSourceIssuedId(Long sourceIssuedId) {
-		this.sourceIssuedId = sourceIssuedId;
+	public void setSourceIssueId(Long sourceIssuedId) {
+		this.sourceIssueId = sourceIssueId;
 	}
 	public Integer getBackLogPosition() {
 		return backLogPosition;
 	}
 	public void setBackLogPosition(Integer backLogPosition) {
 		this.backLogPosition = backLogPosition;
+	}
+	public Long getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
+	public Long getWorkFlowId() {
+		return workFlowId;
+	}
+	public void setWorkFlowId(Long workFlowId) {
+		this.workFlowId = workFlowId;
 	}
 	
 	

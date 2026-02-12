@@ -12,7 +12,7 @@ import com.TaskmanagementProject.Entity.WorkFlow;
 
 public interface WorkFlowRepository extends JpaRepository<WorkFlow,Long>{
 
-	Optional<WorkFlow> findByTransactionName(String transactionName);
+	Optional<WorkFlow> findByTransaction_TransactionName(String transactionName);
     Optional<WorkFlow>findByWorkFlowName(String workFlowName);
 	
 	

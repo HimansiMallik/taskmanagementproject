@@ -1,10 +1,10 @@
-package net.javaguides.springboot;
+package com.TaskmanagementProject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class taskmanagetmentprojectApplicationTests {
+class TaskmanagementprojectApplicationTests {
 
 	@Test
 	void contextLoads() {

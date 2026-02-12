@@ -1,6 +1,7 @@
 package com.TaskmanagementProject.Entity;
 import java.time.LocalDateTime;
 
+
 import com.Taskmanagement.Enum.Role;
 
 import jakarta.persistence.*;
@@ -8,20 +9,23 @@ import lombok.*;
 
 
 @Entity
-@Table(name="userProfiles")
-@Data
+
+@Table(name="user_profile")
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-
 public class UserProfile {
+	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	
 	private Long id;
+	
+	
 	@Column(unique=true,nullable=false)
 	private String userOfficialEmail;
 	
@@ -34,6 +38,7 @@ public class UserProfile {
 	
 	private LocalDateTime CreatedAt;
 	
+	@Builder.Default
 	private boolean active=true;
 	private String password;
 	private Role role;
